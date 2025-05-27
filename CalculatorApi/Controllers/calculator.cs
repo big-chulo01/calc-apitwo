@@ -1,57 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
+using CalculatorApi.Interfaces;
 
-namespace MyWebAPI.Controllers
+namespace CalculatorApi.Controllers
 {
     [ApiController]
 
     [Route("api/[controller]")]
+    
     public class CalculatorController : ControllerBase
-
     {
-        [HttpGet("add")]
+        private readonly ICalculatorService _calculator;
 
-        public IActionResult Add(decimal a, decimal b)
+        public CalculatorController(ICalculatorService calculator)
         {
-            return Ok(a + b);
+            _calculator = calculator;
         }
+
+        [HttpGet("add")]
+        public ActionResult<double> Add(double x, double y) =>
+            Ok(_calculator.Add(x, y));
 
         [HttpGet("subtract")]
+        public ActionResult<double> Subtract(double x, double y) =>
+            Ok(_calculator.Subtract(x, y));
 
-        public IActionResult Subtract(decimal a, decimal b)
-        {
-            return Ok(a - b);
-        }
-
-         [HttpGet("multiply")]
-
-        public IActionResult Multiply(decimal a, decimal b)
-        {
-            return Ok(a * b);
-        }
-
+        [HttpGet("multiply")]
+        public ActionResult<double> Multiply(double x, double y) =>
+            Ok(_calculator.Multiply(x, y));
 
         [HttpGet("divide")]
-
-        public IActionResult Divide(decimal a, decimal b)
-        {
-            return Ok(a / b);
-        }
-
-         [HttpGet("modulo")]
-
-        public IActionResult Modulo(decimal a, decimal b)
-        {
-            return Ok(a % b);
-        }
-        
-        [HttpGet("debt")]
-
-        public IActionResult Debt(decimal a, decimal b,  decimal c)
-        {
-            return Ok(a + b + c);
-        }
-
-        
-
+        public ActionResult<double> Divide(double x, double y) =>
+            Ok(_calculator.Divide(x, y));
     }
 }
